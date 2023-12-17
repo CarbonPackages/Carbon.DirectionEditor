@@ -1,10 +1,10 @@
 .editor {
     display: inline-grid;
     grid-template:
-        "NW N NE" 1fr
-        "W C E" 1fr
-        "SW S SE" 1fr
-        / 1fr 1fr 1fr;
+        "NW N NE" auto
+        "W C E" auto
+        "SW S SE" auto
+        / auto auto auto;
 }
 
 .button {
