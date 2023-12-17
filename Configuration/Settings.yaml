@@ -1,0 +1,10 @@
+Neos:
+  Neos:
+    Ui:
+      resources:
+        javascript:
+          Carbon.DirectionEditor:Plugin:
+            resource: resource://Carbon.DirectionEditor/Public/Plugin.js
+        stylesheets:
+          Carbon.DirectionEditor:Plugin:
+            resource: resource://Carbon.DirectionEditor/Public/Plugin.css
