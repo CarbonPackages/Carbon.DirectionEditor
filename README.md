@@ -25,7 +25,7 @@ Example:
             northWest: true
             southEast: true
             southWest: true
-            center: true
+            center: 'If it is a string, it used as label'
             disabled: false
 
 ```

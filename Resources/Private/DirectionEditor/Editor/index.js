@@ -24,7 +24,7 @@ const defaultProps = {
     },
 };
 
-function Editor(props, second) {
+function Editor(props) {
     const changeValue = (value) => {
         if (value === "center") {
             value = "";
@@ -39,9 +39,10 @@ function Editor(props, second) {
     return (
         <div className={clsx(style.editor, disabled && style.editorDisabled)}>
             {Object.entries(options).map(([key, enabled]) => {
-                if (enabled !== true || key === "disabled") {
+                if (!enabled || key === "disabled") {
                     return;
                 }
+                const title = typeof enabled == "string" ? i18nRegistry.translate(enabled) : null;
                 if (key === "center") {
                     return (
                         <button
@@ -53,6 +54,7 @@ function Editor(props, second) {
                             )}
                             onClick={() => changeValue("")}
                             disabled={disabled}
+                            title={title}
                         >
                             <Icon icon="dot-circle" />
                         </button>
@@ -68,6 +70,7 @@ function Editor(props, second) {
                         )}
                         onClick={() => changeValue(key)}
                         disabled={disabled}
+                        title={title}
                     >
                         <Icon icon="chevron-up" />
                     </button>
