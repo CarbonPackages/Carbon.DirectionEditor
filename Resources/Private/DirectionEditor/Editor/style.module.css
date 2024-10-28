@@ -23,18 +23,18 @@
 
     &:hover,
     &:focus {
-        color: var(--colors-PrimaryBlue from global);
+        color: var(--colors-PrimaryBlue);
     }
 }
 
 .active {
     border-radius: 50%;
-    box-shadow: 0 0 0 2px var(--colors-PrimaryBlue from global);
+    box-shadow: 0 0 0 2px var(--colors-PrimaryBlue);
 }
 
 .highlight {
     border-radius: 50%;
-    box-shadow: 0 0 0 2px var(--colors-Warn from global);
+    box-shadow: 0 0 0 2px var(--colors-Warn);
 }
 
 .northWest {

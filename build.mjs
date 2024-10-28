@@ -2,7 +2,6 @@ import esbuild from "esbuild";
 import extensibilityMap from "@neos-project/neos-ui-extensibility/extensibilityMap.json" assert { type: "json" };
 import { cssModules } from "esbuild-plugin-lightningcss-modules";
 
-
 /** @type {import("esbuild").BuildOptions} */
 const options = {
     logLevel: "info",
@@ -23,10 +22,6 @@ const options = {
         cssModules({
             targets: {
                 chrome: 80, // aligns somewhat to es2020
-            },
-            cssModules: {
-                dashedIdents: true,
-                pattern: "carbon-directioneditor-[hash]-[local]",
             },
         }),
     ],
