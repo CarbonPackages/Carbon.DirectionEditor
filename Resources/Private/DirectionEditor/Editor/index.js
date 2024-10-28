@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { neos } from "@neos-project/neos-ui-decorators";
 import { Icon } from "@neos-project/react-ui-components";
 import style from "./style.module.css";
@@ -9,38 +9,58 @@ const neosifier = neos((globalRegistry) => ({
     config: globalRegistry.get("frontendConfiguration").get("Carbon.RangeEditor"),
 }));
 
-const defaultProps = {
-    options: {
-        north: true,
-        east: true,
-        south: true,
-        west: true,
-        northEast: true,
-        northWest: true,
-        southEast: true,
-        southWest: true,
-        center: true,
-        disabled: false,
-    },
+const defaultOptions = {
+    propertyMapping: false,
+    north: true,
+    east: true,
+    south: true,
+    west: true,
+    northEast: true,
+    northWest: true,
+    southEast: true,
+    southWest: true,
+    center: true,
+    disabled: false,
 };
 
 function Editor(props) {
-    const changeValue = (value) => {
+    const options = { ...defaultOptions, ...props.config, ...props.options };
+    const { value, highlight, i18nRegistry } = props;
+    const { disabled } = options;
+    const [state, setState] = useState(value);
+
+    useEffect(() => {
+        setState(getValueFromPropertyMapping(value));
+    }, [value]);
+
+    function getValueFromPropertyMapping(value) {
+        if (options.propertyMapping) {
+            const key = Object.keys(options.propertyMapping).find((key) => options.propertyMapping[key] === value);
+            if (key) {
+                return key;
+            }
+        }
+        return value;
+    }
+
+    function setValueFromPropertyMapping(value) {
+        return options?.propertyMapping?.[value] || value;
+    }
+
+    function changeValue(value) {
+        setState(value);
+        value = setValueFromPropertyMapping(value);
         if (value === "center") {
             value = "";
         }
         props.commit(value);
-    };
-
-    const options = { ...defaultProps.options, ...props.options };
-    const { value, highlight, i18nRegistry } = props;
-    const { disabled } = options;
+    }
 
     return (
         <div className={clsx(style.editor, disabled && style.editorDisabled)}>
             {Object.entries(options).map(([key, enabled]) => {
-                if (!enabled || key === "disabled") {
-                    return;
+                if (!enabled || key === "disabled" || key === "propertyMapping") {
+                    return null;
                 }
                 const title = typeof enabled == "string" ? i18nRegistry.translate(enabled) : null;
                 if (key === "center") {
@@ -50,9 +70,9 @@ function Editor(props) {
                             className={clsx(
                                 style.button,
                                 style[key],
-                                !value && (highlight ? style.highlight : style.active),
+                                (!state || state == "center") && (highlight ? style.highlight : style.active),
                             )}
-                            onClick={() => changeValue("")}
+                            onClick={() => changeValue("center")}
                             disabled={disabled}
                             title={title}
                         >
@@ -66,7 +86,7 @@ function Editor(props) {
                         className={clsx(
                             style.button,
                             style[key],
-                            value === key && (highlight ? style.highlight : style.active),
+                            state === key && (highlight ? style.highlight : style.active),
                         )}
                         onClick={() => changeValue(key)}
                         disabled={disabled}

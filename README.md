@@ -17,6 +17,7 @@ Example:
         inspector:
           editor: 'Carbon.DirectionEditor/Editor'
           editorOptions:
+            propertyMapping: false
             north: true
             east: true
             south: true
@@ -27,8 +28,25 @@ Example:
             southWest: true
             center: 'If it is a string, it used as label'
             disabled: false
-
 ```
+
+You can change the saved values if you alter the `propertyMapping`:
+
+```yaml
+'Foo.Bar:Element':
+  properties:
+    direction:
+      type: string
+      ui:
+        inspector:
+          editor: 'Carbon.DirectionEditor/Editor'
+          editorOptions:
+            propertyMapping:
+              north: top
+              south: bottom
+```
+
+In the example above, `north` will get saved as `top` and `south` as `bottom`
 
 [packagist]: https://packagist.org/packages/carbon/directioneditor
 [latest stable version]: https://poser.pugx.org/carbon/directioneditor/v/stable

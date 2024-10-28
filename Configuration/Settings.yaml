@@ -8,3 +8,16 @@ Neos:
         stylesheets:
           Carbon.DirectionEditor:Plugin:
             resource: resource://Carbon.DirectionEditor/Public/Plugin.css
+      frontendConfiguration:
+        Carbon.RangeEditor:
+          propertyMapping: false
+          north: true
+          east: true
+          south: true
+          west: true
+          northEast: true
+          northWest: true
+          southEast: true
+          southWest: true
+          center: true
+          disabled: false
